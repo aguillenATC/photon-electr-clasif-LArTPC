@@ -1,0 +1,6 @@
+\cellcolor{EffiYellow} \textbf{concat_hits_padding} & 0.7887 & 0.8592 $\pm$ 0.0036 & 0.77 $\pm$ 0.0151 & 0.8418 & 0.5002 $\pm$ 0.0083 & 0.503 & 0.5068 $\pm$ 0.0102 & 0.8897 $\pm$ 0.0016 & 0.8817 \\
+\hline
+\cellcolor{EffiYellow} \textbf{concat_random_hits_padding} & 0.7634 & 0.8487 $\pm$ 0.006 & 0.7468 $\pm$ 0.045 & 0.8509 & 0.5044 $\pm$ 0.0092 & 0.5061 & 0.5066 $\pm$ 0.007 & 0.8603 $\pm$ 0.0021 & 0.8771 \\
+\hline
+\cellcolor{EffiYellow} \textbf{sorted_hits_padding} & 0.7639 & 0.8235 $\pm$ 0.0052 & 0.7539 $\pm$ 0.0537 & 0.8392 & 0.5008 $\pm$ 0.0044 & 0.5076 & 0.509 $\pm$ 0.0058 & 0.8552 $\pm$ 0.0026 & 0.8827 \\
+\hline

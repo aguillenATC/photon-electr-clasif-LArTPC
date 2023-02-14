@@ -1,0 +1,5 @@
+,n_estimators,min_samples_split,min_samples_leaf,max_features,fitness
+0,369,6,1,log2,0.8796764408493428
+1,369,6,1,sqrt,0.890798786653185
+2,369,5,1,sqrt,0.8918099089989889
+3,369,4,1,sqrt,0.8938321536905965

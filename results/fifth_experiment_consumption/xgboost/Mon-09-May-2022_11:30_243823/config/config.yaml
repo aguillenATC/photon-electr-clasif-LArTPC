@@ -1,0 +1,168 @@
+evaluation:
+  data_path: data/concat_cropped_hits/140/train_val_test/
+  dataset_names: {test: testing_set.npy, train: training_set.npy, val: validation_set.npy}
+  evaluators:
+    final:
+      parameters:
+        fixed_model_parameters: {n_jobs: 16, random_state: 42, use_label_encoder: false}
+        paradigm: xgboost
+      type: testing_dataset
+    fitness:
+      parameters:
+        fixed_model_parameters: {n_jobs: 16, random_state: 42, use_label_encoder: false}
+        paradigm: xgboost
+      type: validation_dataset
+  labels_names: {test: testing_labels.npy, train: training_labels.npy, val: validation_labels.npy}
+  n_jobs: 1
+initialization:
+  parameters: {}
+  type: random
+monitoring:
+- parameters: {time_tracker: monitoring/time}
+  type: time
+- parameters: {device: hpm8, energy_tracker: monitoring/energy, power_tracker: monitoring/power,
+    user: jleon-dune-experiment4}
+  type: energy
+neighbor_selection:
+  parameters: {}
+  type: tabu_if_best_overall
+neighborhood_generation:
+  parameters:
+    steps: {learning_rate: 0.04, max_depth: 1, n_estimators: 10, subsample: 0.05}
+  type: fixed_step
+random_seed: 243823
+reinitialization:
+  parameters: {}
+  type: random
+reinitialization_criterion:
+  parameters: {progress_threshold: 0.005, steps_back: 10}
+  type: if_stagnant
+results:
+  add_path_rundate: true
+  config_subfolder: config/
+  files:
+  - parameters:
+      save: {fname: solution_history, sep: ','}
+      target_tracker: progress/solution_history
+    type: csv
+  - parameters:
+      save: {fname: best_solution_history, sep: ','}
+      target_tracker: progress/best_solution_history
+    type: csv
+  - parameters:
+      save: {fname: fitness_history, sep: ','}
+      target_tracker: progress/fitness_history
+    type: csv
+  - parameters:
+      save: {fname: best_fitness_history, sep: ','}
+      target_tracker: progress/best_fitness_history
+    type: csv
+  - parameters:
+      save: {fname: best_model_test_evaluation, sep: ','}
+      target_tracker: post_processing/final_evaluation
+    type: csv
+  - parameters:
+      save: {fname: time_elapsed, sep: ','}
+      target_tracker: monitoring/time
+    type: csv
+  - parameters:
+      save: {fname: energy_consumption, sep: ','}
+      target_tracker: monitoring/energy
+    type: csv
+  - parameters:
+      save: {fname: instantaneous_power, sep: ','}
+      target_tracker: monitoring/power
+    type: csv
+  files_subfolder: data/
+  path: results/DUNE-results/photon_electron/fourth_experiment/xgboost/Mon-09-May-2022_11:30_243823/
+  plots:
+  - parameters:
+      plot:
+        axes: {xlabel: Steps, ylabel: Fitness value}
+        general: {color: '#ff9f66'}
+      save: {fname: fitness_history.pdf, format: pdf, transparent: true}
+      target_tracker: progress/fitness_history
+    type: progress
+  - parameters:
+      plot:
+        axes: {xlabel: Steps, ylabel: Fitness value}
+        general: {color: '#ff9f66'}
+      save: {fname: best_fitness_history.pdf, format: pdf, transparent: true}
+      target_tracker: progress/best_fitness_history
+    type: progress
+  - parameters:
+      plot:
+        axes: {xlabel: Learning rate, ylabel: Number of trees}
+        general: {x: learning_rate, y: n_estimators}
+      save: {fname: trees_vs_learning-rate.pdf, format: pdf, transparent: true}
+      target_tracker: progress/solution_history
+    type: space_coverage
+  - parameters:
+      plot:
+        axes: {xlabel: Data subsampling ratio, ylabel: Number of trees}
+        general: {x: subsample, y: n_estimators}
+      save: {fname: trees_vs_subsampling-ratio.pdf, format: pdf, transparent: true}
+      target_tracker: progress/solution_history
+    type: space_coverage
+  - parameters:
+      plot:
+        axes: {xlabel: Number of trees, ylabel: Frequency}
+        general: {bw_adjust: 0.25, color: '#ff9f66', fill: true, x: n_estimators}
+      save: {fname: n-estimators_distribution.pdf, format: pdf, transparent: true}
+      target_tracker: progress/solution_history
+    type: value_distribution
+  - parameters:
+      plot:
+        axes: {xlabel: Learning rate, ylabel: Frequency}
+        general: {bw_adjust: 0.25, color: '#ff9f66', fill: true, x: learning_rate}
+      save: {fname: learning-rate_distribution.pdf, format: pdf, transparent: true}
+      target_tracker: progress/solution_history
+    type: value_distribution
+  - parameters:
+      plot:
+        axes: {xlabel: Maximum tree depth, ylabel: Frequency}
+        general: {bw_adjust: 0.25, color: '#ff9f66', fill: true, x: max_depth}
+      save: {fname: max-depth_distribution.pdf, format: pdf, transparent: true}
+      target_tracker: progress/solution_history
+    type: value_distribution
+  - parameters:
+      plot:
+        axes: {xlabel: Data subsampling ratio, ylabel: Frequency}
+        general: {bw_adjust: 0.25, color: '#ff9f66', fill: true, x: subsample}
+      save: {fname: subsample_distribution.pdf, format: pdf, transparent: true}
+      target_tracker: progress/solution_history
+    type: value_distribution
+  plots_subfolder: plots/
+  post_processing:
+  - parameters: {evaluation_tracker: post_processing/final_evaluation, model_tracker: post_processing/final_model}
+    type: post_evaluator
+  syncing:
+  - parameters:
+      commit: {branch: main, file_list: null, message: XGBoost hyperparameter optimization
+          consumption experiment}
+      optional: {return_to_previous_branch: true, update_submodule: false}
+      repos: {path_to_main: ./, path_to_submodule: results/DUNE-results/}
+    type: github
+solution_ranges:
+  learning_rate:
+    range: [0.01, 0.5]
+    type: numerical
+  max_depth:
+    range: [2, 12]
+    type: numerical
+  n_estimators:
+    range: [50, 1000]
+    type: numerical
+  subsample:
+    range: [0.25, 1.0]
+    type: numerical
+stopping_criterion:
+  parameters: {iteration_limit: 200}
+  type: iteration_limit
+tabu_tenures: {learning_rate: 5, max_depth: 5, n_estimators: 10, subsample: 5}
+trackers:
+  progress:
+    best_fitness_history: {max_size: null}
+    best_solution_history: {max_size: null}
+    fitness_history: {max_size: null}
+    solution_history: {max_size: null}

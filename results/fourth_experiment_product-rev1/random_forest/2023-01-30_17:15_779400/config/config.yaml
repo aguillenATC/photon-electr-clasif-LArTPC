@@ -1,0 +1,297 @@
+evaluation:
+  data_path: /data/concat_cropped_hits/175/train_val_test/
+  dataset_names:
+    test: testing_set.npy
+    train: training_set.npy
+    val: validation_set.npy
+  evaluators:
+    final:
+    - parameters:
+        fixed_model_parameters:
+          n_jobs: 2
+          random_state: 42
+        paradigm: random_forest
+        split: test
+      type: accuracy
+    - parameters:
+        fixed_model_parameters:
+          n_jobs: 2
+          random_state: 42
+        paradigm: random_forest
+        split: test
+      type: auc
+    - parameters:
+        fixed_model_parameters:
+          n_jobs: 2
+          random_state: 42
+        paradigm: random_forest
+        split: test
+      type: precision
+    - parameters:
+        fixed_model_parameters:
+          n_jobs: 2
+          random_state: 42
+        paradigm: random_forest
+        split: test
+      type: recall
+    - parameters:
+        fixed_model_parameters:
+          n_jobs: 2
+          random_state: 42
+        paradigm: random_forest
+        split: test
+      type: precision_recall_product
+    - parameters:
+        fixed_model_parameters:
+          n_jobs: 2
+          random_state: 42
+        paradigm: random_forest
+        split: test
+      type: specificity
+    - parameters:
+        fixed_model_parameters:
+          n_jobs: 2
+          random_state: 42
+        paradigm: random_forest
+        split: test
+      type: npv
+    - parameters:
+        fixed_model_parameters:
+          n_jobs: 2
+          random_state: 42
+        paradigm: random_forest
+        split: test
+      type: kappa
+    fitness:
+      parameters:
+        fixed_model_parameters:
+          n_jobs: 2
+          random_state: 42
+        paradigm: random_forest
+        split: val
+      type: precision_recall_product
+  labels_names:
+    test: testing_labels.npy
+    train: training_labels.npy
+    val: validation_labels.npy
+  n_jobs: 4
+initialization:
+  parameters: {}
+  type: random
+monitoring:
+- parameters:
+    time_tracker: monitoring/time
+  type: time
+neighbor_selection:
+  parameters: {}
+  type: tabu_if_best_overall
+neighborhood_generation:
+  parameters:
+    steps:
+      max_features: 1
+      min_samples_leaf: 1
+      min_samples_split: 1
+      n_estimators: 10
+  type: fixed_step
+random_seed: 779400
+reinitialization:
+  parameters: {}
+  type: random
+reinitialization_criterion:
+  parameters:
+    progress_threshold: 0.005
+    steps_back: 10
+  type: if_stagnant
+results:
+  append_time_to_path: true
+  config_subfolder: config/
+  files:
+  - parameters:
+      save:
+        fname: solution_history
+        sep: ','
+      target_tracker: progress/solution_history
+    type: csv
+  - parameters:
+      save:
+        fname: best_solution_history
+        sep: ','
+      target_tracker: progress/best_solution_history
+    type: csv
+  - parameters:
+      save:
+        fname: fitness_history
+        sep: ','
+      target_tracker: progress/fitness_history
+    type: csv
+  - parameters:
+      save:
+        fname: best_fitness_history
+        sep: ','
+      target_tracker: progress/best_fitness_history
+    type: csv
+  - parameters:
+      save:
+        fname: best_model_test_evaluation_accuracy
+        sep: ','
+      target_tracker: post_processing/final_accuracy
+    type: csv
+  - parameters:
+      save:
+        fname: best_model_test_evaluation_auc
+        sep: ','
+      target_tracker: post_processing/final_auc
+    type: csv
+  - parameters:
+      save:
+        fname: best_model_test_evaluation_precision
+        sep: ','
+      target_tracker: post_processing/final_precision
+    type: csv
+  - parameters:
+      save:
+        fname: best_model_test_evaluation_recall
+        sep: ','
+      target_tracker: post_processing/final_recall
+    type: csv
+  - parameters:
+      save:
+        fname: best_model_test_evaluation_precision_recall_product
+        sep: ','
+      target_tracker: post_processing/final_precision_recall_product
+    type: csv
+  - parameters:
+      save:
+        fname: best_model_test_evaluation_kappa
+        sep: ','
+      target_tracker: post_processing/final_kappa
+    type: csv
+  - parameters:
+      save:
+        fname: best_model_test_evaluation_specificity
+        sep: ','
+      target_tracker: post_processing/final_specificity
+    type: csv
+  - parameters:
+      save:
+        fname: best_model_test_evaluation_npv
+        sep: ','
+      target_tracker: post_processing/final_npv
+    type: csv
+  - parameters:
+      save:
+        fname: time_elapsed
+        sep: ','
+      target_tracker: monitoring/time
+    type: csv
+  files_subfolder: data/
+  path: /results/eaai-rev1/fifth_experiment/random_forest/2023-01-30_17:15_779400/
+  plots:
+  - parameters:
+      plot:
+        axes:
+          xlabel: Steps
+          ylabel: Fitness value
+        general:
+          color: '#ff9f66'
+      save:
+        fname: fitness_history.pdf
+        format: pdf
+        transparent: true
+      target_tracker: progress/fitness_history
+    type: progress
+  - parameters:
+      plot:
+        axes:
+          xlabel: Steps
+          ylabel: Fitness value
+        general:
+          color: '#ff9f66'
+      save:
+        fname: best_fitness_history.pdf
+        format: pdf
+        transparent: true
+      target_tracker: progress/best_fitness_history
+    type: progress
+  plots_subfolder: plots/
+  post_processing:
+  - parameters:
+      evaluation_tracker: post_processing/final_accuracy
+      evaluator: accuracy
+      model_tracker: post_processing/final_model
+    type: post_evaluator
+  - parameters:
+      evaluation_tracker: post_processing/final_auc
+      evaluator: auc
+      model_tracker: post_processing/final_model
+    type: post_evaluator
+  - parameters:
+      evaluation_tracker: post_processing/final_precision
+      evaluator: precision
+      model_tracker: post_processing/final_model
+    type: post_evaluator
+  - parameters:
+      evaluation_tracker: post_processing/final_recall
+      evaluator: recall
+      model_tracker: post_processing/final_model
+    type: post_evaluator
+  - parameters:
+      evaluation_tracker: post_processing/final_precision_recall_product
+      evaluator: precision_recall_product
+      model_tracker: post_processing/final_model
+    type: post_evaluator
+  - parameters:
+      evaluation_tracker: post_processing/final_kappa
+      evaluator: kappa
+      model_tracker: post_processing/final_model
+    type: post_evaluator
+  - parameters:
+      evaluation_tracker: post_processing/final_specificity
+      evaluator: specificity
+      model_tracker: post_processing/final_model
+    type: post_evaluator
+  - parameters:
+      evaluation_tracker: post_processing/final_npv
+      evaluator: npv
+      model_tracker: post_processing/final_model
+    type: post_evaluator
+solution_ranges:
+  max_features:
+    range:
+    - sqrt
+    - log2
+    type: categorical
+  min_samples_leaf:
+    range:
+    - 1
+    - 9
+    type: numerical
+  min_samples_split:
+    range:
+    - 2
+    - 10
+    type: numerical
+  n_estimators:
+    range:
+    - 50
+    - 1000
+    type: numerical
+stopping_criterion:
+  parameters:
+    iteration_limit: 200
+  type: iteration_limit
+tabu_tenures:
+  max_features: 1
+  min_samples_leaf: 3
+  min_samples_split: 3
+  n_estimators: 10
+trackers:
+  progress:
+    best_fitness_history:
+      max_size: null
+    best_solution_history:
+      max_size: null
+    fitness_history:
+      max_size: null
+    solution_history:
+      max_size: null
