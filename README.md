@@ -1,2 +1,2 @@
 # photon-electr-clasif-LArTPC
-Code to perform photon vs electron classification in LArTPC
+Code and results for the research on photon/electron classification.
